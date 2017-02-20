@@ -10,7 +10,7 @@ print('New York Times -- First 10 Story Headings\n')
 ### Your Problem 1 solution goes here
 
 base_url = 'http://www.nytimes.com'
-r = requests.get(base_url)
+r = requests.get(base_url, headers = {'User-Agent': 'SI_CLASS'})
 soup = BeautifulSoup(r.text, 'html.parser')  # returns as html
 
 for story_heading in soup.find_all(class_="story-heading", limit=10):  #for item in list of 10
@@ -26,7 +26,7 @@ print('Michigan Daily -- MOST READ\n')
 
 ### Your Problem 2 solution goes here
 base_url = 'https://www.michigandaily.com/'
-r = requests.get(base_url)
+r = requests.get(base_url,  headers = {'User-Agent': 'SI_CLASS'})
 soup = BeautifulSoup(r.text, 'html.parser')  # returns as html
 
 for tag in soup.find_all("div", class_="panel-pane pane-mostread"):
@@ -39,7 +39,7 @@ print("Mark's page -- Alt tags\n")
 
 ### Your Problem 3 solution goes here
 base_url = 'http://newmantaylor.com/gallery.html'
-r = requests.get(base_url)
+r = requests.get(base_url,  headers = {'User-Agent': 'SI_CLASS'})
 soup = BeautifulSoup(r.text, 'html.parser')
 
 for i in soup.find_all("img"):   # find_all returns a list
@@ -56,14 +56,14 @@ print("UMSI faculty directory emails\n")
 ### Your Problem 4 solution goes here
 base_url = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=4"
 params = {'page': 0}
-r = requests.get(base_url, params = params, headers = {'User-Agent': 'Mozilla/5.0'})  # headers fixes something about bots I don't understand
+r = requests.get(base_url, params = params,  headers = {'User-Agent': 'SI_CLASS'})  # headers fixes something about bots I don't understand
 soup = BeautifulSoup(r.text, 'html.parser')
 
 # create list of hrefs to prof pages
 proflist = []   # list of links formatted \node\###
 
 for page in range(6):  # only because I know that there are 6 pages to page thru
-    r = requests.get(base_url, params = params, headers = {'User-Agent': 'Mozilla/5.0'})  # headers fixes something about bots I don't understand
+    r = requests.get(base_url, params = params,  headers = {'User-Agent': 'SI_CLASS'})  # headers fixes something about bots I don't understand
     soup = BeautifulSoup(r.text, 'html.parser')
     for tag in soup.find_all("div", class_ = "field field-name-contact-details field-type-ds field-label-hidden"):
         for prof in tag.find_all("a"):
@@ -75,7 +75,7 @@ base_url = "https://www.si.umich.edu"
 
 acc = 1
 for prof in proflist:
-    r = requests.get(base_url + prof, headers = {'User-Agent': 'Mozilla/5.0'})  # headers fixes something about bots I don't understand
+    r = requests.get(base_url + prof, headers = {'User-Agent': 'SI_CLASS'})  # headers fixes something about bots I don't understand
     soup = BeautifulSoup(r.text, 'html.parser')
     for tag in soup.find_all("div", class_ = "field field-name-field-person-email field-type-email field-label-inline clearfix"):
         for tag in tag.find_all("a"):
